@@ -28,9 +28,13 @@ app.use('/', (req, res) => {
 io.on('connection', (socket) => {
   console.log('conectado');
   console.log(`Id da conexão ${socket.id}`);
+
+  socket.on('sendMasseg', (data) => {
+    console.log(data);
+  });
 });
 // Definindo porta
 
-server.listen(3000, () => {
+server.listen(3333, () => {
   console.log('listening on *:3000');
 });
