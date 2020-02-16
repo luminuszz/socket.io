@@ -34,7 +34,11 @@ io.on('connection', (socket) => {
   });
 });
 // Definindo porta
+let port = process.env.PORT;
+if (port == null || port === '') {
+  port = 8000;
+}
 
-server.listen(3333, () => {
-  console.log('listening on *:3000');
+server.listen(port, () => {
+  console.log('Servidor Rodando');
 });
