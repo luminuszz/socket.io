@@ -23,20 +23,18 @@ class App {
   routes() {
     this.connectClass.use(routes);
   }
-
-  io() {
-    io.on('connection', (socket) => {
-      console.log('conectado');
-      console.log(socket.id);
-      socket.on('sendMasseg', (dados) => {
-        console.log(dados);
-      });
-    });
-    io.on('disconnect', () => {
-      console.log('desconectado');
-    });
-  }
 }
+
+io.on('connection', (socket) => {
+  console.log('conectado');
+  console.log(socket.id);
+  socket.on('sendMasseg', (dados) => {
+    console.log(dados);
+  });
+});
+io.on('disconnect', () => {
+  console.log('desconectado');
+});
 
 
 module.exports = new App().connectClass;
