@@ -1,44 +1,36 @@
+/* eslint-disable class-methods-use-this */
+
+// Importando depedencias
 const express = require('express');
-const path = require('path');
 
-// Definindo variavel do express
-const app = express();
-// Criando comunicação entre o express e o socket.io
-const server = require('http').createServer(app);
-const io = require('socket.io').listen((server));
-
-// Definindo oque o socket.io irá ouvir
-app.use(express.static(path.join(__dirname, 'public')));
-// Definindo diretorios da views.
-app.set('views', path.join(__dirname, 'public'));
-// Configurar o node para aceitar "html" como template padrão
-app.engine('html', require('ejs').renderFile);
-
-app.set('view engine', 'html');
+const connect = express();
+const server = require('http').Server(connect);
+const io = require('socket.io')(server);
+const sqlite3 = require('sqlite3');
+const routes = require('./routes');
 
 
-// Definindo rotas
+const db = new sqlite3.Database(':memory:');
+// Conexões
 
+class App {
+  constructor() {
+    this.connectClass = express();
+    this.routes();
+    this.io();
+  }
 
-app.use('/', (req, res) => {
-  res.render('index.html');
-});
+  routes() {
+    this.connectClass.use(routes);
+  }
 
-// Conexão do socket
-io.on('connection', (socket) => {
-  console.log('conectado');
-  console.log(`Id da conexão ${socket.id}`);
-
-  socket.on('sendMasseg', (data) => {
-    console.log(data);
-  });
-});
-// Definindo porta
-let port = process.env.PORT;
-if (port == null || port === '') {
-  port = 8000;
+  io() {
+    io.on('connection', (socket) => {
+      console.log('conectado');
+      console.log(socket.id);
+    });
+  }
 }
 
-server.listen(port, () => {
-  console.log('Servidor Rodando');
-});
+
+module.exports = new App().connectClass;
