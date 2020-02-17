@@ -13,16 +13,8 @@ const routes = require('./routes');
 const db = new sqlite3.Database(':memory:');
 // Conexões
 
-class App {
-  constructor() {
-    this.connectClass = express();
-    this.routes();
-  }
 
-  routes() {
-    this.connectClass.use(routes);
-  }
-}
+connect.use(routes);
 
 io.on('connection', (socket) => {
   console.log('conectado');
@@ -31,9 +23,6 @@ io.on('connection', (socket) => {
     console.log(dados);
   });
 });
-io.on('disconnect', () => {
-  console.log('desconectado');
-});
 
 
-module.exports = new App().connectClass;
+module.exports = server;

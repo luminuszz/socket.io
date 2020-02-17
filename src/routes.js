@@ -5,14 +5,14 @@ const routes = express.Router();
 // Middleware de log
 
 routes.use('/', (req, res, next) => {
-  console.log(`dados:${req.data}`);
+  console.log(`dados:${req}`);
   next();
 });
 
 
 // Routes
 
-routes.get('/', (req, res) => {
+routes.use('/', (req, res) => {
   res.json({ message: 'conectado' });
 });
 
