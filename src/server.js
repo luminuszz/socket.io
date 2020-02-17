@@ -17,7 +17,6 @@ class App {
   constructor() {
     this.connectClass = express();
     this.routes();
-    this.io();
   }
 
   routes() {
