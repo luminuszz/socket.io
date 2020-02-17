@@ -28,7 +28,9 @@ class App {
     io.on('connection', (socket) => {
       console.log('conectado');
       console.log(socket.id);
-      socket.emit('notícias', { olá: 'mundo' });
+      socket.on('sendMasseg', (dados) => {
+        console.log(dados);
+      });
     });
     io.on('disconnect', () => {
       console.log('desconectado');
