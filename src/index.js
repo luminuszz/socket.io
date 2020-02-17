@@ -1,6 +1,5 @@
 
 const server = require('./server');
-
 // Definindo porta
 let port = process.env.PORT;
 if (port == null || port === '') {
